@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.4.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
           persist-credentials: false
 
       - uses: actions/setup-node@v2
