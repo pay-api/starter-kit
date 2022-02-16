@@ -1,14 +1,7 @@
 version: 2
 
-registries:
-  npm-github:
-    type: npm-registry
-    url: https://npm.pkg.github.com
-
 updates:
   - package-ecosystem: npm
-    registries:
-      - npm-github
     directory: /
     schedule:
       interval: weekly
