@@ -1,0 +1,31 @@
+version: 2
+
+registries:
+  npm-github:
+    type: npm-registry
+    url: https://npm.pkg.github.com
+
+updates:
+  - package-ecosystem: npm
+    registries:
+      - npm-github
+    directory: /
+    schedule:
+      interval: weekly
+    assignees: [skilbjo]
+    rebase-strategy: auto
+    versioning-strategy: increase
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: fix
+      include: scope
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    assignees: [skilbjo]
+    open-pull-requests-limit: 1
+    commit-message:
+      prefix: fix
+      include: scope

@@ -25,9 +25,11 @@
     ]
   },
   "include": [
-    "start.ts"
+    "start.ts",
+    ".eslintrc.js"
   ],
   "exclude": [
+    "dist",
     "node_modules"
   ]
 }

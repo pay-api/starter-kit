@@ -4,6 +4,8 @@
   "repository": "github:pay-api/api.git",
   "scripts": {
     "eslint": "eslint .",
+    "lint": "npm run eslint",
+    "build": "tsc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "skilbjo",

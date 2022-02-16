@@ -3,25 +3,12 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: [
-    'prettier',
-    'typescript',
-    'eslint:recommended',
-  ],
+  extends: ['prettier', 'typescript', 'eslint:recommended'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020,
-    project: './tsconfig.json',
-    sourceType: 'module',
-  },
-  plugins: [
-    'prettier',
-    'import',
-  ],
+  plugins: ['prettier', 'import'],
   reportUnusedDisableDirectives: true,
   rules: {
     eqeqeq: 2,
