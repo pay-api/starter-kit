@@ -28,8 +28,9 @@ jobs:
 
       - uses: cycjimmy/semantic-release-action@v2.7.0
         with:
+          working_directory: ./sdk-example
           semantic_version: 17
           extra_plugins: |
             @semantic-release/exec@6.0.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
