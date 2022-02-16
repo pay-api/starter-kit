@@ -7,6 +7,7 @@ on:
 defaults:
   run:
     shell: bash
+    working-directory: ./sdk-example
 
 permissions:
   pull-requests: write
