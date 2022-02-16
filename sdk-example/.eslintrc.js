@@ -9,6 +9,10 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
   plugins: ['prettier', 'import'],
+  parser: '@typescript-eslint/parser',
+  // parserOptions: {
+  // project: './tsconfig.json',
+  // },
   reportUnusedDisableDirectives: true,
   rules: {
     eqeqeq: 2,
