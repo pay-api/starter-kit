@@ -20,9 +20,9 @@ jobs:
           token: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
           persist-credentials: false
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version-file: sdk-example/.nvmrc
           cache: npm
           cache-dependency-path: sdk-example/package-lock.json
 

@@ -23,9 +23,9 @@ jobs:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version-file: sdk-example/.nvmrc
           cache: npm
           cache-dependency-path: sdk-example/package-lock.json
 
