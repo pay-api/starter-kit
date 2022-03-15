@@ -31,7 +31,7 @@ jobs:
 
       - run: make ci
 
-      - uses: cycjimmy/semantic-release-action@v2.7.0
+      - uses: cycjimmy/semantic-release-action@v3.0.0
         with:
           working_directory: ./sdk-example
           semantic_version: 17
@@ -45,7 +45,7 @@ jobs:
     needs: build-and-test
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - uses: dependabot/fetch-metadata@v1.2.1
+      - uses: dependabot/fetch-metadata@v1.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Approve a PR
