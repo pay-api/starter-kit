@@ -26,7 +26,7 @@ jobs:
           cache: npm
           cache-dependency-path: sdk-example/package-lock.json
 
-      - uses: cycjimmy/semantic-release-action@v2.7.0
+      - uses: cycjimmy/semantic-release-action@v3.0.0
         with:
           working_directory: ./sdk-example
           semantic_version: 17
