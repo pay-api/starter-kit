@@ -25,7 +25,7 @@ const createTransaction = async (): Promise<api.TransactionResponse> => {
     transaction_type: 'charge',
   };
 
-  const response = await axios.request({
+  const response = await axios.request<AxiosResponse<api.TransactionResponse>>({
     method: 'POST',
     url: `${BASE_URL}/transaction`,
     headers: { ...authorizationHeader },
@@ -41,7 +41,7 @@ const createTransaction = async (): Promise<api.TransactionResponse> => {
 const getTransaction = async (
   txnId: api.TransactionIdRequest
 ): Promise<api.TransactionResponse> => {
-  const response = await axios.request({
+  const response = await axios.request<AxiosResponse<api.TransactionResponse>>({
     method: 'GET',
     url: `${BASE_URL}/transaction/${txnId}`,
     headers: { ...authorizationHeader },
@@ -55,7 +55,9 @@ const getTransaction = async (
 
 const searchTransactions =
   async (): Promise<api.SearchTransactionsResponse> => {
-    const response = await axios.request({
+    const response = await axios.request<
+      AxiosResponse<api.SearchTransactionsResponse>
+    >({
       method: 'GET',
       url: `${BASE_URL}/search?start_date=2022-01-01&end_date=2022-01-15`,
       headers: { ...authorizationHeader },
@@ -91,8 +93,10 @@ const searchTransactions =
 function handleResponseBase<T>({ response }: { response: AxiosResponse }): T {
   const {
     headers: { 'x-amzn-requestid': requestId, 'x-amzn-trace-id': traceId },
-    data: apiResponse,
+    data,
   } = response;
+
+  const apiResponse: T = data; // type `apiResponse`, if you destructure inline on L96 it will have an `any` type
 
   console.log(
     { requestId, traceId },
