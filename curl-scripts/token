@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+url='https://dev.api.pay-api.link' # dev
+
+client_id='' # your client id
+client_secret='' # your client secret
+redirect_uri='' # your redirect_uri
+
+code="${1:-''}" # pass in your auth code as a script argument, ie `./token [auth_code]` or paste it inline here between the single quotes, ie `code="${1:-'[auth_code]'}"`
+
+token() {
+  local payload="$(echo "$(cat <<EOF
+{
+
+  "client_id": "$client_id",
+  "client_secret": "$client_secret",
+  "grant_type": "authorization_code",
+  "redirect_uri": "$redirect_uri",
+  "code": "$code"
+}
+EOF
+)" | jq -c . )"
+
+  curl "${url}/management/token" \
+    -X POST \
+    -H "Pay-Api-Origin: starter-kit" \
+    --data "$payload"
+}
+
+token

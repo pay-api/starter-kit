@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+url='https://dev.api.pay-api.link' # dev
+
+token="${1:-''}" # pass your access token here as an argument or paste it between the single quotes
+
+transactions() {
+  local start_date='2022-04-01' # set this as you'd like
+  local end_date='2022-04-30' # set this as you'd like
+
+  curl -i "${url}/retail/transactions?start_date=${start_date}&end_date=${end_date}" \
+    -H "Authorization: Bearer $token" \
+    -H "Pay-Api-Origin: starter-kit" \
+    -X GET
+}
+
+transactions
