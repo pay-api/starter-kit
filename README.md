@@ -7,7 +7,7 @@
 ## Starter kit resources
 
 - [Connect guide](./connect): examples on how to use [Connect](https://connect.pay-api.link/?client_id=88C0525D-067C4B8B-A96DD467-FAD7BE72&mode=retail&scopes=identity%20transactions%20&redirect_uri=https://pay-api.link&sandbox=true)
-- [SDK usage example](./sdk-examples): examples on how to use the [SDK](https://www.npmjs.com/package/@pay-api/api)
+- [SDK usage example](./sdk-example): examples on how to use the [SDK](https://www.npmjs.com/package/@pay-api/api)
 - [curl collection](./curl-collection): example scripts calling the api with `curl`
 
 ## Authenticating with pay-api

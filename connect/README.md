@@ -1,27 +1,37 @@
 # Connect
 
+<p align="center">
+  <a href="https://pay-api.link">
+    <img src = "./../dev-resources/connect.png" width = 300px>
+  </a>
+</p>
+
 ## Overview
 
-pay-api is an oauth 2.1 application that allows developers to access customer data, without developers needing to manage integrations or collect login credentials from users for these third party systems.
+pay-api is an oauth 2.1 application that allows developers to access customer
+data, without developers needing to manage integrations or collect login
+credentials from users for these third party systems.
 
-Connect provides a secure and convenient authorization flow for your users to grant your application access to their provider accounts.
+Connect provides a secure and convenient authorization flow for your users to
+grant your application access to their provider accounts.
 
 ## Integrate
 
 There are two ways to integration Connect into your application's UI.
 
-- your application can generate a connect uri and then redirect your user's browser to connect, hosted by pay-api at `https://connect.pay-api.link`.
-- your application can open Connect in an `iframe` using the react SDK. Your user remains on your domain during the entire authorization flow. 
+- your application can generate a connect uri and then redirect your user's
+  browser to connect, hosted by pay-api at `https://connect.pay-api.link`.
+- your application can open Connect in an `iframe` using the react SDK. Your
+  user remains on your domain during the entire authorization flow.
 
 ## Demo
 
-<p align="center">
-	<iframe width="400" height="400" src="https://www.loom.com/embed/c43b9ec4e8b94c6cb16c40cb2356066f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</p>
+[![Demo](https://j.gifs.com/A6oMMj.gif)](https://www.loom.com/embed/c43b9ec4e8b94c6cb16c40cb2356066f)
 
 ## Parameters to Connect
 
-use these query params (`?param=_value`) to modify behavior of connect to trigger your desired use case
+use these query params (`?param=_value`) to modify behavior of connect to
+trigger your desired use case
 
 ```
  // your application's client id
@@ -30,9 +40,9 @@ use these query params (`?param=_value`) to modify behavior of connect to trigge
 // the type of providers you are after, ie tax, retail
 - mode // required
 
-// where to redirect the user after a successful authorization. 
-// the redirect url will include both `?authorization_code=...&state=...` 
-// if state was provided; if state was omitted, then there 
+// where to redirect the user after a successful authorization.
+// the redirect url will include both `?authorization_code=...&state=...`
+// if state was provided; if state was omitted, then there
 // will be no state query param in the callback
 - redirect_uri // required
 
@@ -46,7 +56,7 @@ use these query params (`?param=_value`) to modify behavior of connect to trigge
 - sandbox // optional
 
 // open-ended field that your application will as a query parameter
-// during the callback after a successful authorization. 
+// during the callback after a successful authorization.
 // example: your user's internal id
 - state // optional
 
