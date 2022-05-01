@@ -6,7 +6,7 @@ url='https://dev.api.pay-api.link' # dev
 token="${1:-''}" # pass your access token here as an argument or paste it between the single quotes
 
 identity() {
-  curl -i \
+  curl \
     -H "Authorization: Bearer $token" \
     -H "Pay-Api-Origin: starter-kit" \
     -X GET \

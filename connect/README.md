@@ -26,7 +26,7 @@ There are two ways to integration Connect into your application's UI.
 
 ## Demo
 
-[![Demo](https://j.gifs.com/A6oMMj.gif)](https://www.loom.com/embed/c43b9ec4e8b94c6cb16c40cb2356066f)
+[![Demo](https://j.gifs.com/A6oMMj.gif)](https://www.loom.com/embed/6bca9e77500d4f9e8d52d73e8b521f68)
 
 ## Parameters to Connect
 
