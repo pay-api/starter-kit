@@ -2,7 +2,7 @@
 
 ## Quickstart
 
-install the dependencies (including sdk), 
+install the dependencies (including sdk),
 
 ```bash
 npm install
@@ -11,58 +11,43 @@ npm install
 call the sdk-example,
 
 ```bash
-PAY_API_KEY='your key here' ./start.ts
+PAY_API_ACCESS_TOKEN='your key here' ./start.ts
 ```
+
+for example (note that this key will be revoked after publishing):
+
+  ```bash
+  @mbp2:sdk-example $ PAY_API_ACCESS_TOKEN=Y2xpZW50Izg4QzA1MjVELTA2N0M0QjhCLUE5NkRENDY3LUZBRDdCRTcyfHRva2VuIzY3NGQyNTkyLTcwZGMtNGY4YS05YWZjLTZjYThkMTA1NTllNA== ./start.ts
+  ```
 
 what you will receive back as a response
 
 ```
-$ PAY_API_KEY='[[ redacted ]]' ./start.ts
+$ PAY_API_ACCESS_TOKEN='[[ redacted ]]' ./start.ts
 {
-  requestId: '53d2a97f-7dbe-409b-9496-ee56c3e10d1f',
-  xrayTraceId: 'Root=1-620085d5-671652990fd885c013148878'
-} logged request ids; if errors encountered, please contact us with these ids
+  requestId: 'c37074ec-c5c7-45b4-898f-a792463599e3',
+  traceId: 'Root=1-626e05b0-1e49a2cd340c02bb63c3d5cc'
+} if errors encountered, please send me these ids
 
 {
-  result: {
-    amount: 123,
-    created_at: '2022-02-07T02:37:13.338Z',
-    is_test: true,
-    merchant_id: 'cd0938bc-ed24-5b3c-b930-c878ebfb54ae',
-    transaction_id: '5cff0dc5-86a7-41c9-ad3d-d6c6c87fd902',
-    transaction_type: 'charge'
-  }
+  identity: { email: 'Louisa_Bogan47@yahoo.com', name: 'Ernie Schmitt' }
 }
 ```
 
 ### Notes
 
-The script (`start.ts`) is currently set up to hit the sandbox environment. 
+The script (`start.ts`) is currently set up to hit the dev environment.
 
 To hit the other environments (`dev`, `prod`), you will need to do two changes to this example:
 
-1. Edit BASE_URL to target the respective environment (here, we'll change this to the dev environment)
+Edit BASE_URL to target the respective environment (here, we'll change this to the prod environment)
 
-	```typescript
-	const BASE_URL = 'https://sandbox.dev.engineering.pay-api.link';
-	```
-	
-	to
-	
-	```typescript
-	const BASE_URL = 'https://dev.api.pay-api.link';
-	```
-	
-	the `BASE_URL` will change yet again if you wish to call the production environment.
+  ```typescript
+  const BASE_URL = 'https://dev.api.pay-api.link';
+  ```
 
-2. Change the API token prefix
+  to
 
-	```typescript
-	const authorizationHeaderValue = `Sandbox ${API_KEY}`;
-	```
-	
-	```typescript
-	const authorizationHeaderValue = `Key ${API_KEY}`;
-	```
-	
-	the token prefix (`Key`) will not change if you wish to call the production environment, but your respective API key will need to change, as API keys are restricted to their respective environments.
+  ```typescript
+  const BASE_URL = 'https://api.pay-api.link';
+  ```

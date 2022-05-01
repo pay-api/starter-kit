@@ -4,84 +4,62 @@ import { default as axios, AxiosResponse } from 'axios';
 import joi from 'joi';
 
 // per the respective api environment
-//  - dev: `https://dev.api.pay-api.link`
-//  - sandbox: `https://sandbox.dev.engineering.pay-api.link`
-const BASE_URL = 'https://sandbox.dev.engineering.pay-api.link';
-const API_KEY = process.env.PAY_API_KEY; // keep this private
+//  - dev: 'https://dev.api.pay-api.link'
+const BASE_URL = 'https://dev.api.pay-api.link';
+const ACCESS_TOKEN = process.env.PAY_API_ACCESS_TOKEN; // keep this private
 
-if (!API_KEY)
+if (!ACCESS_TOKEN)
   throw new Error(
-    'api key not found; load it with `PAY_API_KEY="..." ./start.ts`'
+    'api key not found; load it with `PAY_API_ACCESS_TOKEN="..." ./start.ts`'
   );
-const authorizationHeaderValue = `Sandbox ${API_KEY}`; // `Key` if dev or prod, `Sandbox` if sandbox
+const authorizationHeaderValue = `Bearer ${ACCESS_TOKEN}`; // `Key` if dev or prod, `Sandbox` if sandbox
 const authorizationHeader = { Authorization: authorizationHeaderValue };
 
-type TransactionRequest = Omit<api.TransactionRequest, 'merchant_id'>; // merchantId not required for client requests
+/** mode = Retail */
+// identity request
 
-const createTransaction = async (): Promise<api.TransactionResponse> => {
-  const txn: TransactionRequest = {
-    amount: 123,
-    is_test: true,
-    transaction_type: 'charge',
-  };
-
-  const response = await axios.request<AxiosResponse<api.TransactionResponse>>({
-    method: 'POST',
-    url: `${BASE_URL}/transaction`,
-    headers: { ...authorizationHeader },
-    data: txn,
-  });
-
-  return handleResponse<api.TransactionResponse>({
-    response,
-    joiType: api.joi.transaction,
-  });
-};
-
-const getTransaction = async (
-  txnId: api.TransactionIdRequest
-): Promise<api.TransactionResponse> => {
-  const response = await axios.request<AxiosResponse<api.TransactionResponse>>({
+const getIdentity = async (): Promise<api.IdentityResponse> => {
+  const response = await axios.request<AxiosResponse<api.IdentityResponse>>({
     method: 'GET',
-    url: `${BASE_URL}/transaction/${txnId}`,
+    url: `${BASE_URL}/retail/identity`,
     headers: { ...authorizationHeader },
   });
 
-  return handleResponse<api.TransactionResponse>({
+  return handleResponse<api.IdentityResponse>({
     response,
-    joiType: api.joi.transaction,
+    joiType: api.joi.identity,
   });
 };
 
-const searchTransactions =
-  async (): Promise<api.SearchTransactionsResponse> => {
-    const response = await axios.request<
-      AxiosResponse<api.SearchTransactionsResponse>
-    >({
+// transactions request
+const getTransactions = async (): Promise<api.TransactionsResponse> => {
+  const startDate = '2022-04-01';
+  const endDate = '2022-04-30';
+
+  const response = await axios.request<AxiosResponse<api.TransactionsResponse>>(
+    {
       method: 'GET',
-      url: `${BASE_URL}/search?start_date=2022-01-01&end_date=2022-01-15`,
+      url: `${BASE_URL}/retail/transactions?start_date=${startDate}&end_date=${endDate}`,
       headers: { ...authorizationHeader },
-    });
+    }
+  );
 
-    return handleResponseBase<api.SearchTransactionsResponse>({
-      response,
-    });
-  };
+  return handleResponse<api.TransactionsResponse>({
+    response,
+    joiType: api.joi.retailTransactions,
+  });
+};
 
+/** Main */
 (async (): Promise<void> => {
   try {
-    const create = await createTransaction();
+    const [transactions, identity] = await Promise.all([
+      getTransactions(),
+      getIdentity(),
+    ]);
 
-    console.log({ create });
-
-    const describe = await getTransaction(create.transaction_id);
-
-    console.log({ describe }); // if using the sandbox, the values are randomly generated / do not persist across calls. the data persists in `dev`/`prod` environments.
-    //
-    const search = await searchTransactions();
-
-    console.log({ search });
-    console.log({ searchExampleTxn: search.transactions.slice(0, 2) });
+    console.log({ transactions });
+    console.log({ identity });
   } catch (err) {
     console.log({ err });
     process.exit(1);
@@ -90,13 +68,14 @@ const searchTransactions =
   process.exit(0);
 })();
 
+/** helpers, they joi validate the data along with print out the debugging information */
 function handleResponseBase<T>({ response }: { response: AxiosResponse }): T {
   const {
     headers: { 'x-amzn-requestid': requestId, 'x-amzn-trace-id': traceId },
     data,
   } = response;
 
-  const apiResponse: T = data; // type `apiResponse`, if you destructure inline on L96 it will have an `any` type
+  const apiResponse: T = data; // to type `apiResponse` -- if you destructure inline on L72 (`data`) it will have an `any` type, so we want to property type this
 
   console.log(
     { requestId, traceId },
@@ -111,7 +90,7 @@ function handleResponse<T>({
   joiType,
 }: {
   response: AxiosResponse;
-  joiType: joi.ObjectSchema<T>;
+  joiType: joi.ObjectSchema<T> | joi.ArraySchema;
 }): T {
   const apiResponse = handleResponseBase<T>({ response });
 
