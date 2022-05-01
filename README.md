@@ -44,4 +44,3 @@ In all API calls to you must include the API key in the `Authorization` header:
 ## Get in touch
 - [Send us a message](https://linkedin.com/in/skilbeck) to talk to our development team
 - [Create an issue](https://github.com/pay-api/starter-kit/issues) in this repo if you encounter a bug
-- [Start a discussion](https://github.com/pay-api/starter-kit/discussions) in this repo if you have any feedback on how we can improve this resource
