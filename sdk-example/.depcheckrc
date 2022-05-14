@@ -1,5 +1,5 @@
 ignores: [
-  '@tsconfig/node14',
+  '@tsconfig/node16',
   '@types/node',
   'eslint-plugin-node',
   'ts-node',
