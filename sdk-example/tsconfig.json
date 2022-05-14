@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./",
-    "target": "es2020",
     "module": "commonjs",
     "moduleResolution": "node",
+    "target": "es2021",
+    "baseUrl": "./",
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
