@@ -2,7 +2,8 @@ name: pr
 
 on:
   pull_request_target: # https://github.com/dependabot/dependabot-core/issues/3253
-    branches: [ master ]
+    branches:
+      - master
 
 defaults:
   run:

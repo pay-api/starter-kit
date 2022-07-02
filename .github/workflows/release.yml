@@ -9,10 +9,12 @@ defaults:
   run:
     shell: bash
 
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   sdk-example:
-    permissions:
-      issues: write
     runs-on: ubuntu-latest
 
     defaults:
@@ -42,8 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
 
   jest-mocks:
-    permissions:
-      issues: write
     runs-on: ubuntu-latest
 
     defaults:
