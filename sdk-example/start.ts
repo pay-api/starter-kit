@@ -31,22 +31,20 @@ const getIdentity = async (): Promise<api.IdentityResponse> => {
   });
 };
 
-// transactions request
-const getTransactions = async (): Promise<api.TransactionsResponse> => {
+// orders request
+const getTransactions = async (): Promise<api.OrdersResponse> => {
   const startDate = '2022-04-01';
   const endDate = '2022-04-30';
 
-  const response = await axios.request<AxiosResponse<api.TransactionsResponse>>(
-    {
-      method: 'GET',
-      url: `${BASE_URL}/retail/transactions?start_date=${startDate}&end_date=${endDate}`,
-      headers: { ...authorizationHeader },
-    }
-  );
+  const response = await axios.request<AxiosResponse<api.OrdersResponse>>({
+    method: 'GET',
+    url: `${BASE_URL}/retail/transactions?start_date=${startDate}&end_date=${endDate}`,
+    headers: { ...authorizationHeader },
+  });
 
-  return handleResponse<api.TransactionsResponse>({
+  return handleResponse<api.OrdersResponse>({
     response,
-    joiType: api.joi.retailTransactions,
+    joiType: api.joi.orders,
   });
 };
 
