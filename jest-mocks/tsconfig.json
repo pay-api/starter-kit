@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "target": "es2021",
+    "lib": [
+      "ES2021"
+    ],
+    "outDir": "dist",
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "strict": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "jest",
+      "@types/jest",
+      "node"
+    ]
+  },
+  "include": [
+    ".eslintrc.js",
+    "jest.config.js",
+    "utils.ts",
+    "src.ts",
+    "test.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "name": "@pay-api/starter-kit",
+  "version": "0.0.1",
+  "repository": "github:pay-api/starter-kit.git",
+  "scripts": {
+    "depcheck": "depcheck",
+    "eslint": "eslint .",
+    "lint": "npm run eslint",
+    "test": "jest --runInBand"
+  },
+  "author": "skilbjo",
+  "keywords": [
+    "api",
+    "pay-api",
+    "sdk",
+    "jest",
+    "jest-mocks"
+  ],
+  "dependencies": {
+    "@pay-api/api": "1.0.274",
+    "axios": "0.27.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node16": "1.0.1",
+    "@types/node": "18.0.0",
+    "@typescript-eslint/eslint-plugin": "5.12.0",
+    "@typescript-eslint/parser": "5.12.0",
+    "depcheck": "1.4.3",
+    "eslint": "8.19.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-config-typescript": "3.0.0",
+    "eslint-import-resolver-typescript": "2.7.0",
+    "eslint-plugin-jest": "26.5.3",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "jest": "28.1.2",
+    "ts-jest": "28.0.5",
+    "prettier": "2.7.1",
+    "ts-node": "10.8.1",
+    "typescript": "4.7.4"
+  }
+}
