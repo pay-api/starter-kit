@@ -3,5 +3,6 @@ ignores: [
   '@types/node',
   'eslint-plugin-node',
   'ts-node',
-  'joi'
+  'joi',
+  '@types/jest'
 ]
