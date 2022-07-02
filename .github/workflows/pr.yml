@@ -7,19 +7,23 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: ./sdk-example
 
 permissions:
   pull-requests: write
   contents: write
 
 jobs:
-  build-and-test:
+  sdk-example:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./sdk-example
+
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
+          token: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
 
@@ -34,15 +38,50 @@ jobs:
       - uses: cycjimmy/semantic-release-action@v3.0.0
         with:
           working_directory: ./sdk-example
+          dry_run: true
           semantic_version: 18
           extra_plugins: |
             @semantic-release/exec@6.0.1
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
+
+  jest-mocks:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./jest-mocks
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: jest-mocks/.nvmrc
+          cache: npm
+          cache-dependency-path: jest-mocks/package-lock.json
+
+      - run: make ci
+
+      - uses: cycjimmy/semantic-release-action@v3.0.0
+        with:
+          working_directory: ./jest-mocks
+          dry_run: true
+          semantic_version: 18
+          extra_plugins: |
+            @semantic-release/exec@6.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
 
   dependabot-approve-and-automerge:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs:
+      - sdk-example
+      - jest-mocks
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: dependabot/fetch-metadata@v1.3.1

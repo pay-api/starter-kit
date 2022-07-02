@@ -24,12 +24,12 @@ target/lint:
 	mkdir -p $(@D) && touch $@
 .PHONY: lint
 
-build: | install target/build
-target/build:
-	npm run build
+test: | install target/test
+target/test:
+	npm test
 	mkdir -p $(@D) && touch $@
-.PHONY: build
+.PHONY: test
 
 # --- ci
-ci: | install lint build
+ci: | install lint test
 .PHONY: ci

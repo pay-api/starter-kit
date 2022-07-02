@@ -2,22 +2,27 @@ name: release
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 defaults:
   run:
     shell: bash
-    working-directory: ./sdk-example
 
 jobs:
-  publish-artifact:
+  sdk-example:
     permissions:
       issues: write
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./sdk-example
+
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
+          token: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
           persist-credentials: false
 
       - uses: actions/setup-node@v3
@@ -29,8 +34,39 @@ jobs:
       - uses: cycjimmy/semantic-release-action@v3.0.0
         with:
           working_directory: ./sdk-example
+          dry_run: true
           semantic_version: 18
           extra_plugins: |
             @semantic-release/exec@6.0.1
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }} # replace w/ secrets.GITHUB_TOKEN when repo made public
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
+
+  jest-mocks:
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./jest-mocks
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
+          persist-credentials: false
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: jest-mocks/.nvmrc
+          cache: npm
+          cache-dependency-path: jest-mocks/package-lock.json
+
+      - uses: cycjimmy/semantic-release-action@v3.0.0
+        with:
+          working_directory: ./jest-mocks
+          semantic_version: 18
+          extra_plugins: |
+            @semantic-release/exec@6.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # keep it as `secrets.GITHUB_TOKEN` as repo is public and this token has limited privs
